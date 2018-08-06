@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class TasksAdapter extends ArrayAdapter<Task> {
@@ -19,7 +20,7 @@ public class TasksAdapter extends ArrayAdapter<Task> {
     }
 
     public TasksAdapter(Context context, ArrayList<Task> tasks) {
-        super(context, R.layout.item_task, tasks);
+        super(context, 0, tasks);
     }
 
     @Override
@@ -33,9 +34,9 @@ public class TasksAdapter extends ArrayAdapter<Task> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_task, parent, false);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.taskName);
-            viewHolder.deadline = (TextView) convertView.findViewById(R.id.taskDeadline);
-            viewHolder.timeSpent = (TextView) convertView.findViewById(R.id.timeSpent);
+            viewHolder.name = convertView.findViewById(R.id.task_name);
+            viewHolder.deadline = convertView.findViewById(R.id.task_deadline);
+            viewHolder.timeSpent = convertView.findViewById(R.id.task_time_spent);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {
@@ -45,8 +46,11 @@ public class TasksAdapter extends ArrayAdapter<Task> {
         // Populate the data from the data object via the viewHolder object
         // into the template view.
         viewHolder.name.setText(task.getTaskName());
-        viewHolder.deadline.setText(task.getDueDate());
-        viewHolder.timeSpent.setText(task.getWorkedOnInMinute());
+        String ddlText = "Due "
+                + DateFormat.getDateInstance(DateFormat.MEDIUM).format(task.getDueDate())
+                + " " + task.getDueTime().toString();
+        viewHolder.deadline.setText(ddlText);
+        viewHolder.timeSpent.setText(task.getWorkedOnInMinute() + "min down");
         // Return the completed view to render on screen
         return convertView;
     }

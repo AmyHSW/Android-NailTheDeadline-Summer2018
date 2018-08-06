@@ -9,9 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String EXTRA_NAME = "TASK_POSITION";
 
     // Create a message handling object as an anonymous class.
     private AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
@@ -28,18 +29,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTaskListView() {
-        // TODO get task list from somewhere
-        List<String> taskList = new ArrayList<>();
-        taskList.add("task1");
-        taskList.add("task2");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, taskList);
+        // TODO get task list from database;
+        // TODO only display tasks that have not passed deadline
+        // TODO for task that has passed deadline, collect cat for the task
+        final ArrayList<Task> taskList = new ArrayList<>();
+        taskList.add(Task.create("task1", 2018, 12, 20, 10, 10));
+        ArrayAdapter<Task> adapter = new TasksAdapter(this, taskList);
         ListView listView = (ListView) findViewById(R.id.task_list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // Do something in response to the click
+                Intent intent = new Intent(MainActivity.this, TaskDisplayActivity.class);
+                intent.putExtra(EXTRA_NAME, Integer.toString(position));
+                startActivityForResult(intent, 1000);
             }
         });
     }

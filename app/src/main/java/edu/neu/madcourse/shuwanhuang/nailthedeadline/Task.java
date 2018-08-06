@@ -1,5 +1,8 @@
 package edu.neu.madcourse.shuwanhuang.nailthedeadline;
 
+import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class Task {
@@ -65,24 +68,12 @@ public class Task {
         return taskName;
     }
 
-    public int getDueYear() {
-        return dueYear;
+    public Date getDueDate() {
+        return new Date(dueYear - 1900, dueMonth - 1, dueDate);
     }
 
-    public int getDueMonth() {
-        return dueMonth;
-    }
-
-    public int getDueDate() {
-        return dueDate;
-    }
-
-    public int getDueHour() {
-        return dueHour;
-    }
-
-    public int getDueMinute() {
-        return dueMinute;
+    public Time getDueTime() {
+        return new Time(dueHour, dueMinute, 0);
     }
 
     public int getWorkedOnInMinute() {

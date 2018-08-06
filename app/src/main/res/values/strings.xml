@@ -12,4 +12,6 @@
     <string name="ongoing_tasks_btn">Ongoing Tasks</string>
     <string name="history_btn">History</string>
     <string name="cats_btn">Cats</string>
+    <!--Task Display Activity-->
+    <string name="start_task_btn">Start Working…</string>
 </resources>
