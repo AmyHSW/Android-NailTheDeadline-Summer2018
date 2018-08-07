@@ -2,6 +2,7 @@ package edu.neu.madcourse.shuwanhuang.nailthedeadline;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,8 +13,6 @@ import java.util.Date;
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
-    private static final String EXTRA_NAME = "TASK_POSITION";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +21,8 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
 
     private void initTaskView() {
-        int position = Integer.valueOf(getIntent().getStringExtra(EXTRA_NAME));
-        // TODO Get task by position
-        Task task = Task.create("task1", 2018, 12, 20, 10, 10);
+        Log.d("log", getIntent().getStringExtra(MainActivity.EXTRA_NAME));
+        Task task = Task.fromString(getIntent().getStringExtra(MainActivity.EXTRA_NAME));
 
         TextView name = (TextView) findViewById(R.id.task_name);
         name.setText(task.getTaskName());
@@ -43,8 +41,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
      * @param view the View object that was clicked
      */
     public void onClickStartWorking(View view) {
-        // TODO Hide the Start Working btn, show the timer, start timing and detecting usage
-        // TODO of other apps
+        // TODO: Hide the btn, show the timer, start timing and detecting usage of other apps
         Button btn = (Button) findViewById(R.id.start_task_btn);
         btn.setVisibility(View.INVISIBLE);
     }

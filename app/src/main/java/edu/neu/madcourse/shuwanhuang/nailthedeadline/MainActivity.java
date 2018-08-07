@@ -3,6 +3,7 @@ package edu.neu.madcourse.shuwanhuang.nailthedeadline;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +13,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String EXTRA_NAME = "TASK_POSITION";
+    public static final String PREF_NAME = "NailTheDeadline";
+    public static final String PREF_KEY = "Tasks";
+    public static final String EXTRA_NAME = "Task";
+
+    private final ArrayList<Task> tasks = new ArrayList<>();
 
     // Create a message handling object as an anonymous class.
     private AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
@@ -25,24 +30,43 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initTaskData();
         initTaskListView();
     }
 
+    private void initTaskData() {
+        tasks.clear();
+        String taskData = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+                .getString(PREF_KEY, null);
+        if (taskData != null) {
+            String[] tokens = taskData.split("\n");
+            for (String token: tokens) {
+                token = token.trim();
+                if (!token.equals("")) {
+                    Task task = Task.fromString(token);
+                    tasks.add(task);
+                }
+            }
+        }
+    }
+
     private void initTaskListView() {
-        // TODO get task list from database;
-        // TODO only display tasks that have not passed deadline
-        // TODO for task that has passed deadline, collect cat for the task
-        final ArrayList<Task> taskList = new ArrayList<>();
-        taskList.add(Task.create("task1", 2018, 12, 20, 10, 10));
-        ArrayAdapter<Task> adapter = new TasksAdapter(this, taskList);
+        ArrayAdapter<Task> adapter = new TasksAdapter(this, tasks);
+        // TODO: only display tasks that have not passed deadline
+        // TODO: for task that has passed deadline, collect cat for the task
         ListView listView = (ListView) findViewById(R.id.task_list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, TaskDisplayActivity.class);
-                intent.putExtra(EXTRA_NAME, Integer.toString(position));
-                startActivityForResult(intent, 1000);
+                intent.putExtra(EXTRA_NAME, tasks.get(position).toString());
+                startActivity(intent);
             }
         });
     }
@@ -56,4 +80,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-
