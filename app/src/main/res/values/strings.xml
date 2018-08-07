@@ -3,8 +3,8 @@
     <!--New Task Activity-->
     <string name="task_name_text">Task Name</string>
     <string name="due_text">Due</string>
-    <string name="pick_date_btn">Date</string>
-    <string name="pick_time_btn">Time</string>
+    <string name="pick_date_btn">Set Date</string>
+    <string name="pick_time_btn">Set Time</string>
     <string name="create_task_btn">Create Task</string>
     <string name="cancel_btn">Cancel</string>
     <!--Main Activity-->

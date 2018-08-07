@@ -46,9 +46,7 @@ public class TasksAdapter extends ArrayAdapter<Task> {
         // Populate the data from the data object via the viewHolder object
         // into the template view.
         viewHolder.name.setText(task.getTaskName());
-        String ddlText = "Due "
-                + DateFormat.getDateInstance(DateFormat.MEDIUM).format(task.getDueDate())
-                + " " + task.getDueTime().toString();
+        String ddlText = "Due " + task.getDueDate().toString();
         viewHolder.deadline.setText(ddlText);
         viewHolder.timeSpent.setText(task.getWorkedOnInMinute() + "min down");
         // Return the completed view to render on screen

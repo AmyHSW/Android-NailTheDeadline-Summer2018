@@ -1,6 +1,7 @@
 package edu.neu.madcourse.shuwanhuang.nailthedeadline;
 
 import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -68,11 +69,11 @@ public class Task {
     }
 
     public Date getDueDate() {
-        return new Date(dueYear - 1900, dueMonth, dueDay);
-    }
-
-    public Time getDueTime() {
-        return new Time(dueHour, dueMinute, 0);
+        // Create a Date variable/object with user chosen date
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(dueYear, dueMonth, dueDay, dueHour, dueMinute, 0);
+        return cal.getTime();
     }
 
     public int getWorkedOnInMinute() {

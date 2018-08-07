@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateTaskActivity">
+    tools:context=".CreateTaskActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="110dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -22,7 +23,7 @@
 
     <EditText
         android:id="@+id/taskNameText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
@@ -35,13 +36,14 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="110dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/due_text"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/holo_red_light"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,13 +54,13 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/holo_blue_dark"
+        android:onClick="showDatePickerDialog"
         android:text="@string/pick_date_btn"
-        app:layout_constraintEnd_toStartOf="@+id/pickTimeBtn"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/taskNameText"
-        android:onClick="showDatePickerDialog" />
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskNameText" />
 
     <Button
         android:id="@+id/pickTimeBtn"
@@ -66,28 +68,28 @@
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/holo_orange_light"
+        android:onClick="showTimePickerDialog"
         android:text="@string/pick_time_btn"
+        android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskNameText"
-        android:onClick="showTimePickerDialog"/>
+        app:layout_constraintTop_toBottomOf="@+id/pickDateBtn" />
 
     <Button
         android:id="@+id/createTaskBtn"
         android:layout_width="0dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="272dp"
+        android:layout_marginTop="211dp"
         android:background="@android:color/holo_green_light"
         android:onClick="onClickCreateTask"
         android:text="@string/create_task_btn"
         android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@+id/cancelBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/time_text" />
 
     <Button
         android:id="@+id/cancelBtn"
@@ -105,4 +107,39 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createTaskBtn" />
+
+    <EditText
+        android:id="@+id/date_text"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="date"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/pickDateBtn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/taskNameText" />
+
+    <EditText
+        android:id="@+id/time_text"
+        android:layout_width="134dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="210dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="time"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/createTaskBtn"
+        app:layout_constraintEnd_toStartOf="@+id/pickTimeBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_text" />
 </android.support.constraint.ConstraintLayout>

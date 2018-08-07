@@ -7,10 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.util.Date;
-
 public class TaskDisplayActivity extends AppCompatActivity {
 
     @Override
@@ -28,11 +24,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         name.setText(task.getTaskName());
 
         TextView deadline = (TextView) findViewById(R.id.deadline);
-        Date dueDate = task.getDueDate();
-        Time dueTime = task.getDueTime();
-        String ddlText = "Due "
-                + DateFormat.getDateInstance(DateFormat.MEDIUM).format(dueDate)
-                + " " + dueTime.toString();
+        String ddlText = "Due " + task.getDueDate().toString();
         deadline.setText(ddlText);
     }
 

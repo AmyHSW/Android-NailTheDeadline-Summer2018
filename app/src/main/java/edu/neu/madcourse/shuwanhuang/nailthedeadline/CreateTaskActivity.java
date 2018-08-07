@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.text.DateFormat;
+import java.util.Locale;
+
 public class CreateTaskActivity extends AppCompatActivity {
 
     private int year = -1;
@@ -22,14 +27,26 @@ public class CreateTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_task);
     }
 
-    // TODO: update UI after selecting datetime
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment();
+        if (hour != -1) {
+            Bundle args = new Bundle();
+            args.putInt(TimePickerFragment.HOUR, hour);
+            args.putInt(TimePickerFragment.MINUTE, minute);
+            newFragment.setArguments(args);
+        }
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
+        if (year != -1) {
+            Bundle args = new Bundle();
+            args.putInt(DatePickerFragment.YEAR, year);
+            args.putInt(DatePickerFragment.MONTH, month);
+            args.putInt(DatePickerFragment.DAY, day);
+            newFragment.setArguments(args);
+        }
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
@@ -37,11 +54,28 @@ public class CreateTaskActivity extends AppCompatActivity {
         this.year = year;
         this.month = month;
         this.day = day;
+
+        // Create a Date variable/object with user chosen date
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month, day, 0, 0, 0);
+        Date chosenDate = cal.getTime();
+
+        // Format the date using style medium and US locale
+        DateFormat df_medium_us = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
+        String df_medium_us_str = df_medium_us.format(chosenDate);
+
+        // Display the formatted date
+        EditText dateText = findViewById(R.id.date_text);
+        dateText.setText(df_medium_us_str);
     }
 
     public void onSelectTime(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
+        EditText timeText = findViewById(R.id.time_text);
+        String time = hour + ":" + minute;
+        timeText.setText(time);
     }
 
     /**
