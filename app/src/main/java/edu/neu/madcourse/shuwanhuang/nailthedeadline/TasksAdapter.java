@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class TasksAdapter extends ArrayAdapter<Task> {

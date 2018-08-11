@@ -3,7 +3,6 @@ package edu.neu.madcourse.shuwanhuang.nailthedeadline;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -77,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickNewTask(View view) {
         Intent intent = new Intent(this, CreateTaskActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickCats(View view) {
+        Intent intent = new Intent(this, CatsActivity.class);
         startActivity(intent);
     }
 }

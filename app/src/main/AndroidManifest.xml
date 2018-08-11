@@ -9,18 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:label="Tasks List">
+        <activity
+            android:name=".MainActivity"
+            android:label="Ongoing Tasks">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateTaskActivity"
-            android:label="Create New Task"/>
-        <activity android:name=".TaskDisplayActivity"
-            android:label="Task"></activity>
+
+        <activity
+            android:name=".CreateTaskActivity"
+            android:label="Create New Task" />
+
+        <activity
+            android:name=".TaskDisplayActivity"
+            android:label="Task" />
+
+        <receiver android:name=".EndTimerReceiver" />
+
+        <activity
+            android:name=".CatsActivity"
+            android:label="My Cats" />
     </application>
 
 </manifest>
