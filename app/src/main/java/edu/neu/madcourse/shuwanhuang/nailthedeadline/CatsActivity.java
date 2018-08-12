@@ -11,15 +11,24 @@ import java.util.ArrayList;
 
 public class CatsActivity extends AppCompatActivity {
 
+    private ArrayList<Cat> cats = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cats);
 
-        ArrayList<Cat> cats = new ArrayList<>();
-        cats.add(new Cat(0));
-        cats.add(new Cat(4));
+        initCatsList();
+        initGridView();
+    }
 
+    private void initCatsList() {
+        // TODO get cats from database, only add cats whose id != 0
+        cats.add(new Cat(1));
+        cats.add(new Cat(2));
+    }
+
+    private void initGridView() {
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new CatsImageAdapter(this, cats));
 

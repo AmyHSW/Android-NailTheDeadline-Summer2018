@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Ongoing Tasks">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,20 +19,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".CreateTaskActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Create New Task" />
-
         <activity
             android:name=".TaskDisplayActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Task" />
+        <activity
+            android:name=".CatsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="My Cats" />
 
         <receiver android:name=".EndTimerReceiver" />
 
         <activity
-            android:name=".CatsActivity"
-            android:label="My Cats" />
+            android:name=".TaskHistoryActivity"
+            android:label="History" />
     </application>
 
 </manifest>

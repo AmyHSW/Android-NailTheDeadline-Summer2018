@@ -11,7 +11,7 @@
     <string name="new_task_btn">New Task</string>
     <string name="ongoing_tasks_btn">Ongoing Tasks</string>
     <string name="history_btn">History</string>
-    <string name="cats_btn">Cats</string>
+    <string name="cats_btn">My Cats</string>
     <!--Task Display Activity-->
     <string name="start_task_btn">Start Working…</string>
 </resources>

@@ -86,8 +86,8 @@
         android:onClick="onClickCreateTask"
         android:text="@string/create_task_btn"
         android:textColor="@android:color/background_light"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time_text" />
 
@@ -99,9 +99,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/holo_red_light"
         android:onClick="onClickCancel"
         android:text="@string/cancel_btn"
-        android:textColor="@android:color/holo_red_light"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -141,5 +143,6 @@
         app:layout_constraintBottom_toTopOf="@+id/createTaskBtn"
         app:layout_constraintEnd_toStartOf="@+id/pickTimeBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_text" />
+        app:layout_constraintTop_toBottomOf="@+id/date_text"
+        app:layout_constraintVertical_bias="1.0" />
 </android.support.constraint.ConstraintLayout>

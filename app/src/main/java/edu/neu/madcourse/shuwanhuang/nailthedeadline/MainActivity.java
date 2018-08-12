@@ -1,6 +1,7 @@
 package edu.neu.madcourse.shuwanhuang.nailthedeadline;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,13 +20,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_NAME = "Task";
 
     private final ArrayList<Task> tasks = new ArrayList<>();
-
-    // Create a message handling object as an anonymous class.
-    private AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView parent, View v, int position, long id) {
-            // Do something in response to the click
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +40,23 @@ public class MainActivity extends AppCompatActivity {
                 .getString(PREF_KEY, null);
         if (taskData != null) {
             String[] tokens = taskData.split("\n");
+            Date currentDateTime = Calendar.getInstance().getTime();
             for (String token: tokens) {
                 token = token.trim();
                 if (!token.equals("")) {
                     Task task = Task.fromString(token);
-                    tasks.add(task);
+                    Date dueDateTime = task.getDueDate();
+                    // TODO: for task that has passed deadline, collect cat for the task
+                    if (dueDateTime.after(currentDateTime)) {
+                        tasks.add(task);
+                    }
                 }
             }
         }
     }
 
     private void initTaskListView() {
-        ArrayAdapter<Task> adapter = new TasksAdapter(this, tasks);
-        // TODO: only display tasks that have not passed deadline
-        // TODO: for task that has passed deadline, collect cat for the task
+        ArrayAdapter<Task> adapter = new TasksAdapter(this, tasks, false);
         ListView listView = (ListView) findViewById(R.id.task_list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -81,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickCats(View view) {
         Intent intent = new Intent(this, CatsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickHistory(View view) {
+        Intent intent = new Intent(this, TaskHistoryActivity.class);
         startActivity(intent);
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +15,9 @@ import java.text.DateFormat;
 import java.util.Locale;
 
 public class CreateTaskActivity extends AppCompatActivity {
+
+    private static final String WARNING_DEADLINE = "Please select valid date and time for deadline.";
+    private static final String WARNING_NAME = "The task name must not be empty.";
 
     private int year = -1;
     private int month = -1;
@@ -83,9 +87,19 @@ public class CreateTaskActivity extends AppCompatActivity {
      * @param view the View object that was clicked
      */
     public void onClickCreateTask(View view) {
+        String warning = "";
+        if (!dueDateIsValid()) {
+            warning += WARNING_DEADLINE;
+        }
         EditText nameText = findViewById(R.id.taskNameText);
         String name = nameText.getText().toString();
-        // TODO: validation for name & datetime > current
+        if (!nameIsValid(name)) {
+            warning += " " + WARNING_NAME;
+        }
+        if (warning.length() > 0) {
+            Toast.makeText(this, warning, Toast.LENGTH_LONG).show();
+            return;
+        }
         Task task = Task.create(name, year, month, day, hour, minute);
         SharedPreferences pref = getSharedPreferences(MainActivity.PREF_NAME, Context.MODE_PRIVATE);
         String data = pref.getString(MainActivity.PREF_KEY, null);
@@ -96,6 +110,18 @@ public class CreateTaskActivity extends AppCompatActivity {
         }
         pref.edit().putString(MainActivity.PREF_KEY, data).commit();
         finish();
+    }
+
+    private boolean dueDateIsValid() {
+        Calendar cal = Calendar.getInstance();
+        Date now = cal.getTime();
+        cal.setTimeInMillis(0);
+        cal.set(year, month, day, hour, minute, 0);
+        return cal.getTime().after(now);
+    }
+
+    private boolean nameIsValid(String name) {
+        return name != null && !name.equals("");
     }
 
     /**
