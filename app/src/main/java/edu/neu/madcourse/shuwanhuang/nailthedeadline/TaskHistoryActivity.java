@@ -2,8 +2,10 @@ package edu.neu.madcourse.shuwanhuang.nailthedeadline;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +48,10 @@ public class TaskHistoryActivity extends AppCompatActivity {
     }
 
     private void initTaskHistoryListView() {
+        if (tasks.size() > 0) {
+            TextView noHistoryTextView = findViewById(R.id.no_history_text);
+            noHistoryTextView.setVisibility(View.INVISIBLE);
+        }
         ArrayAdapter<Task> adapter = new TasksAdapter(this, tasks, true);
 
         ListView listView = (ListView) findViewById(R.id.history_list);

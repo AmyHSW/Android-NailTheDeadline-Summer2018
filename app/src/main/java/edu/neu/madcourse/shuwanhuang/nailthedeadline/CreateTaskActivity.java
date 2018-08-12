@@ -17,7 +17,8 @@ import java.util.Locale;
 public class CreateTaskActivity extends AppCompatActivity {
 
     private static final String WARNING_DEADLINE = "Please select valid date and time for deadline.";
-    private static final String WARNING_NAME = "The task name must not be empty.";
+    private static final String WARNING_NAME = "Please enter a task name with only letters, "
+        + "numbers, underscores and/or dashes.";
 
     private int year = -1;
     private int month = -1;
@@ -121,7 +122,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     }
 
     private boolean nameIsValid(String name) {
-        return name != null && !name.equals("");
+        return name != null && !name.equals("") && name.matches("[a-zA-Z0-9_-]*");
     }
 
     /**

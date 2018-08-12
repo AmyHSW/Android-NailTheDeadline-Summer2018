@@ -13,5 +13,9 @@
     <string name="history_btn">History</string>
     <string name="cats_btn">My Cats</string>
     <!--Task Display Activity-->
-    <string name="start_task_btn">Start Working…</string>
+    <string name="start_task_btn">Start Working</string>
+    <string name="stop_task_btn">Stop</string>
+    <!--History Activity-->
+    <string name="no_history_text">You don\'t have any history yet.\n\n
+        Let\'s start with creating a new task!!</string>
 </resources>

@@ -13,10 +13,10 @@ public class EndTimerReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        NotificationManager notificationManager =
+        NotificationManager nm =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         int notificationId = intent.getIntExtra(NOTIFICATION_ID, 0);
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
-        notificationManager.notify(notificationId, notification);
+        nm.notify(notificationId, notification);
     }
 }
