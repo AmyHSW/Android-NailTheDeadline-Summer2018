@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Ongoing Tasks">
             <intent-filter>
@@ -20,22 +20,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateTaskActivity"
+            android:name=".activity.CreateTaskActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Create New Task" />
         <activity
-            android:name=".TaskDisplayActivity"
+            android:name=".activity.TaskDisplayActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Task" />
         <activity
-            android:name=".CatsActivity"
+            android:name=".activity.CatsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="My Cats" />
 
-        <receiver android:name=".EndTimerReceiver" />
+        <receiver android:name=".notification.EndTimerReceiver" />
 
         <activity
-            android:name=".TaskHistoryActivity"
+            android:name=".activity.TaskHistoryActivity"
             android:label="History" />
     </application>
 
