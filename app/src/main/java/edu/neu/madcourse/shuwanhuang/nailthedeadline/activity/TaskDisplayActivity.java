@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +15,7 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,6 +50,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     private LocationListener ll = new LocationListener(){
         @Override
         public void onLocationChanged(Location loc) {
+            if (loc == null) return;
             if (locationSet) {
                 Toast.makeText(TaskDisplayActivity.this, "You changed your location!",
                         Toast.LENGTH_SHORT).show();
@@ -201,8 +204,8 @@ public class TaskDisplayActivity extends AppCompatActivity {
             finish();
         } else {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            lm.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 5000, 5, ll);
+            // Request location updates
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, ll);
         }
     }
 
@@ -219,10 +222,12 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
 
     private Notification getNotification(String content) {
-        Notification.Builder builder = new Notification.Builder(this);
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this, EndTimerReceiver.CHANNEL_ID);
         return builder.setContentTitle("Nail the deadline")
                 .setContentText(content)
                 .setSmallIcon(R.drawable.ic_stat_name)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build();
     }
 
