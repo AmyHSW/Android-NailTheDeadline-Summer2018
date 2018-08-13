@@ -7,6 +7,8 @@
     <string name="pick_time_btn">Set Time</string>
     <string name="create_task_btn">Create Task</string>
     <string name="cancel_btn">Cancel</string>
+    <string name="pick_date_text">Please pick date</string>
+    <string name="pick_time_text">Please pick time</string>
     <!--Main Activity-->
     <string name="new_task_btn">New Task</string>
     <string name="ongoing_tasks_btn">Ongoing Tasks</string>

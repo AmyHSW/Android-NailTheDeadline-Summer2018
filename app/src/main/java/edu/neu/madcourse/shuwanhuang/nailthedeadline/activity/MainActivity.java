@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
             noTasksTextView.setVisibility(View.INVISIBLE);
         } else {
             noTasksTextView.setVisibility(View.VISIBLE);
-            return;
         }
         ArrayAdapter<Task> adapter = new TasksAdapter(this, tasks, false);
         ListView listView = (ListView) findViewById(R.id.task_list);

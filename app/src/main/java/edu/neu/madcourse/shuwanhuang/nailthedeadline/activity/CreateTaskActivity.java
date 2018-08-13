@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -75,16 +76,18 @@ public class CreateTaskActivity extends AppCompatActivity {
         String df_medium_us_str = df_medium_us.format(chosenDate);
 
         // Display the formatted date
-        EditText dateText = findViewById(R.id.date_text);
+        TextView dateText = findViewById(R.id.date_text);
         dateText.setText(df_medium_us_str);
+        dateText.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
     }
 
     public void onSelectTime(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
-        EditText timeText = findViewById(R.id.time_text);
+        TextView timeText = findViewById(R.id.time_text);
         String time = hour + ":" + minute;
         timeText.setText(time);
+        timeText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
     }
 
     /**

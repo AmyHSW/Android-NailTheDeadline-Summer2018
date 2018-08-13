@@ -36,7 +36,7 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="100dp"
+        android:layout_width="83dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -51,7 +51,7 @@
 
     <Button
         android:id="@+id/pickDateBtn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
@@ -64,7 +64,7 @@
 
     <Button
         android:id="@+id/pickTimeBtn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
@@ -110,35 +110,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createTaskBtn" />
 
-    <EditText
+    <TextView
         android:id="@+id/date_text"
-        android:layout_width="0dp"
+        android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
-        android:inputType="date"
+        android:text="@string/pick_date_text"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/pickDateBtn"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/taskNameText" />
 
-    <EditText
+    <TextView
         android:id="@+id/time_text"
-        android:layout_width="134dp"
+        android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_marginBottom="210dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="145dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="116dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="time"
+        android:text="@string/pick_time_text"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_orange_dark"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/createTaskBtn"
         app:layout_constraintEnd_toStartOf="@+id/pickTimeBtn"
