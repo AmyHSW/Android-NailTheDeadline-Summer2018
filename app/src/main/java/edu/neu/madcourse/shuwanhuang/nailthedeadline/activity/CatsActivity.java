@@ -45,7 +45,8 @@ public class CatsActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(CatsActivity.this, "" + position,
+                Cat cat = cats.get(position);
+                Toast.makeText(CatsActivity.this, "Cat #" + cat.getID(),
                         Toast.LENGTH_SHORT).show();
             }
         });

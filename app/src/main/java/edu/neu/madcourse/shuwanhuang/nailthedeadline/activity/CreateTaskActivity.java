@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
@@ -85,8 +86,12 @@ public class CreateTaskActivity extends AppCompatActivity {
         this.hour = hour;
         this.minute = minute;
         TextView timeText = findViewById(R.id.time_text);
-        String time = hour + ":" + minute;
-        timeText.setText(time);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(0, 0, 0, hour, minute, 0);
+        Date time =calendar.getTime();
+        String timeStr = dateFormat.format(time);
+        timeText.setText(timeStr);
         timeText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
     }
 

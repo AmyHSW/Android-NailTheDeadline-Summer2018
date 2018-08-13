@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.neu.madcourse.shuwanhuang.nailthedeadline">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Ongoing Tasks">
             <intent-filter>
@@ -21,14 +24,17 @@
         </activity>
         <activity
             android:name=".activity.CreateTaskActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Create New Task" />
         <activity
             android:name=".activity.TaskDisplayActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Task" />
         <activity
             android:name=".activity.CatsActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="My Cats" />
 
@@ -36,6 +42,7 @@
 
         <activity
             android:name=".activity.TaskHistoryActivity"
+            android:screenOrientation="portrait"
             android:label="History" />
     </application>
 

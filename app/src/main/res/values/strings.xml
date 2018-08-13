@@ -25,4 +25,36 @@
     <!--Cats Activity-->
     <string name="no_cats_text">You don\'t have any cats yet.\n\n
         Let\'s start with creating a new task!!</string>
+    <!--Menu-->
+    <string name="acknowledge">Acknowledgement</string>
+    <string name="help">Help</string>
+    <string name="to_graders">To Graders</string>
+    <string name="ok_label">OK</string>
+    <string name="help_msg">\
+        Nail the Deadline helps you focus on what is important and keeps you away from your phone.
+        \n\
+        You can earn a cat by simply setting yourself a task and focusing on it! Whether you will get a cat
+        depends on how much time you spent on your task. The longer you focus on the task, the
+        higher probability you will get a cat. <b>There are 12 cat species.</b> Some of them are very
+        rare and you must spend long enough time on your task to get them. (Gotta catch\'em all!!)
+        \n\
+        <b>Some tips:</b> if the total time you spend on the task is less than 1 hour, you will not get
+        a cat (Oops!). The total time is accumulated until the deadline has come.
+        \n\
+        When you\'re focusing on the app, we expect you not to use other apps. If you start using
+        other apps, the stopwatch will stop automatically. Also, we\'re detecting the location
+        in the meanwhile. If you move too far, we will stop counting as well.
+    </string>
+    <string name="acknowledgement_msg">\
+        Cat images: http://qiao88.com/show/3508115.html
+    </string>
+    <string name="to_graders_msg">\
+        This app requires long time (> 60min) to see all functions. For example, users will get
+        notification when they focus on the task for an hour, the purpose of which is to remind
+        them to take a break. Also, the cat collection depends on the time spent, you will need
+        to spend a lot of time (~ 10 hr) to get rare cats.
+        \n\
+        <b>Attention</b>: For testing purpose, I have intentionally set <b>10 seconds as 1 hour</b>,
+        so that you will be able to get notification when you spend 10s on the task.
+    </string>
 </resources>

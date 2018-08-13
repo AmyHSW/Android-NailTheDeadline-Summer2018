@@ -5,8 +5,14 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,15 +31,38 @@ import edu.neu.madcourse.shuwanhuang.nailthedeadline.object.Task;
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
+    private static final int REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int AN_HOUR_IN_MILLIS = 10000; // TODO: change this
 
     private Task task;
     private boolean running = false;
+    private boolean locationSet = false;
+    private LocationListener ll = new LocationListener(){
+        @Override
+        public void onLocationChanged(Location loc) {
+            if (locationSet) {
+                Toast.makeText(TaskDisplayActivity.this, "You changed your location!",
+                        Toast.LENGTH_SHORT).show();
+                stopWorking();
+                finish();
+            } else {
+                locationSet = true;
+            }
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {}
+
+        @Override
+        public void onProviderEnabled(String provider) {}
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+    };
 
     private long startTime;
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
-
         @Override
         public void run() {
             long currentTime = System.currentTimeMillis();
@@ -53,6 +82,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
             TextView stopwatch = findViewById(R.id.stopwatch);
             stopwatch.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+            stopwatch.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
 
             timerHandler.postDelayed(this, 500);
         }
@@ -106,6 +136,8 @@ public class TaskDisplayActivity extends AppCompatActivity {
         running = true;
         findViewById(R.id.start_task_btn).setVisibility(View.INVISIBLE);
         findViewById(R.id.stop_task_btn).setVisibility(View.VISIBLE);
+
+        scheduleLocationListener();
         startTime = System.currentTimeMillis();
         timerHandler.postDelayed(timerRunnable, 0);
 
@@ -123,11 +155,15 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
     private void stopWorking() {
         running = false;
-        ((TextView) findViewById(R.id.stopwatch)).setText("00:00:00");
+        TextView stopwatch = (TextView) findViewById(R.id.stopwatch);
+        stopwatch.setText("00:00:00");
+        stopwatch.setTextColor(getResources().getColor(android.R.color.darker_gray));
         findViewById(R.id.start_task_btn).setVisibility(View.VISIBLE);
         findViewById(R.id.stop_task_btn).setVisibility(View.INVISIBLE);
         timerHandler.removeCallbacks(timerRunnable);
         addTaskTime((int) ((System.currentTimeMillis() - startTime) / 1000)); // TODO: change this
+        ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).removeUpdates(ll);
+        locationSet = false;
         cancelNotificationAlarm();
     }
 
@@ -141,6 +177,21 @@ public class TaskDisplayActivity extends AppCompatActivity {
             }
         }
         DatabaseUtil.writeOngoingTasksToDB(this, tasks);
+    }
+
+    private void scheduleLocationListener() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_ACCESS_FINE_LOCATION);
+            finish();
+        } else {
+            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            lm.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER, 5000, 5, ll);
+        }
     }
 
     private void scheduleNotificationAlarm(String content, int delayInMillis) {
