@@ -216,7 +216,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
             assert lm != null;
             String bestProvider = lm.getBestProvider(criteria, true);
             // Request location updates
-            lm.requestLocationUpdates(bestProvider, 5000, 5, ll);
+            lm.requestLocationUpdates(bestProvider, 5000, 20, ll);
         }
     }
 
