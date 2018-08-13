@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,14 @@ import edu.neu.madcourse.shuwanhuang.nailthedeadline.object.Task;
 public class TaskDisplayActivity extends AppCompatActivity {
 
     private static final int REQUEST_ACCESS_FINE_LOCATION = 1;
-    private static final int AN_HOUR_IN_MILLIS = 10000; // TODO: change this
+    // Here we set 1 real-world second to 10 minutes in program to make testing easier
+    private static final int A_MINUTE_IN_MILLIS = 100;
+    // TODO: uncomment the following line for the real app
+    // private static final int A_MINUTE_IN_MILLIS = 1000 * 60;
+    private static final int AN_HOUR_IN_MILLIS = A_MINUTE_IN_MILLIS * 60;
+
+
+    private PowerManager.WakeLock wakeLock;
 
     private Task task;
     private boolean running = false;
@@ -97,12 +105,16 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Lock");
+        wakeLock.acquire();
         initTaskView();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        wakeLock.release();
         if (running) {
             stopWorking();
         }
@@ -161,7 +173,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         findViewById(R.id.start_task_btn).setVisibility(View.VISIBLE);
         findViewById(R.id.stop_task_btn).setVisibility(View.INVISIBLE);
         timerHandler.removeCallbacks(timerRunnable);
-        addTaskTime((int) ((System.currentTimeMillis() - startTime) / 1000)); // TODO: change this
+        addTaskTime((int) ((System.currentTimeMillis() - startTime) / A_MINUTE_IN_MILLIS));
         ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).removeUpdates(ll);
         locationSet = false;
         cancelNotificationAlarm();

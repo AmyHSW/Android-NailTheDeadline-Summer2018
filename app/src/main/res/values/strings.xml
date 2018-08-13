@@ -54,7 +54,7 @@
         them to take a break. Also, the cat collection depends on the time spent, you will need
         to spend a lot of time (~ 10 hr) to get rare cats.
         \n\
-        <b>Attention</b>: For testing purpose, I have intentionally set <b>10 seconds as 1 hour</b>,
+        <b>Attention</b>: For testing purpose, I have intentionally set <b>1 second as 10 minutes</b>,
         so that you will be able to get notification when you spend 10s on the task.
     </string>
 </resources>
