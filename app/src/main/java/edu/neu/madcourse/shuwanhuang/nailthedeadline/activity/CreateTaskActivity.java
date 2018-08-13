@@ -1,7 +1,5 @@
 package edu.neu.madcourse.shuwanhuang.nailthedeadline.activity;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +16,7 @@ import edu.neu.madcourse.shuwanhuang.nailthedeadline.fragment.DatePickerFragment
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.R;
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.object.Task;
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.fragment.TimePickerFragment;
+import edu.neu.madcourse.shuwanhuang.nailthedeadline.util.DatabaseUtil;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
@@ -107,14 +106,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             return;
         }
         Task task = Task.create(name, year, month, day, hour, minute);
-        SharedPreferences pref = getSharedPreferences(MainActivity.PREF_NAME, Context.MODE_PRIVATE);
-        String data = pref.getString(MainActivity.PREF_KEY, null);
-        if (data == null) {
-            data = task.toString();
-        } else {
-            data = task.toString() + '\n' + data;
-        }
-        pref.edit().putString(MainActivity.PREF_KEY, data).commit();
+        DatabaseUtil.addNewTaskToDB(this, task);
         finish();
     }
 

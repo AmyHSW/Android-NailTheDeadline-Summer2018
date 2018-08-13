@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.object.Cat;
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.adapter.CatsImageAdapter;
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.R;
+import edu.neu.madcourse.shuwanhuang.nailthedeadline.util.DatabaseUtil;
 
 public class CatsActivity extends AppCompatActivity {
 
@@ -27,12 +30,15 @@ public class CatsActivity extends AppCompatActivity {
     }
 
     private void initCatsList() {
-        // TODO get cats from database, only add cats whose id != 0
-        cats.add(new Cat(1));
-        cats.add(new Cat(2));
+        Set<Cat> collectedCats = DatabaseUtil.readCollectedCatsFromDB(this);
+        cats.addAll(collectedCats);
     }
 
     private void initGridView() {
+        if (!cats.isEmpty()) {
+            TextView noCatsTextView = findViewById(R.id.no_cats_text);
+            noCatsTextView.setVisibility(View.INVISIBLE);
+        }
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new CatsImageAdapter(this, cats));
 

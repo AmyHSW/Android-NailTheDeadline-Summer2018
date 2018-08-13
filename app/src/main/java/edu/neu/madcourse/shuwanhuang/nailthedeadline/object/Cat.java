@@ -1,8 +1,13 @@
 package edu.neu.madcourse.shuwanhuang.nailthedeadline.object;
 
+import java.util.Objects;
+
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.R;
 
 public class Cat {
+
+    private static final int MIN_CAT_ID = 0;
+    private static final int MAX_CAT_ID = 12;
 
     // references to our images
     private static final Integer[] CAT_IMAGES = {
@@ -18,6 +23,9 @@ public class Cat {
     private final int catID;
 
     public Cat(int id) {
+        if (id < MIN_CAT_ID || id > MAX_CAT_ID) {
+            throw new RuntimeException("The cat ID (" + id + ") is invalid.");
+        }
         catID = id;
     }
 
@@ -27,5 +35,18 @@ public class Cat {
 
     public Integer getImage() {
         return CAT_IMAGES[catID];
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cat cat = (Cat) o;
+        return catID == cat.catID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(catID);
     }
 }

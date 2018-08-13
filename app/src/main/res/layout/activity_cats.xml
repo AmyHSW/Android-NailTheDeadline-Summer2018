@@ -17,4 +17,18 @@
         android:stretchMode="columnWidth"
         android:gravity="center"
         />
+
+    <TextView
+        android:id="@+id/no_cats_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/no_cats_text"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gridview" />
 </android.support.constraint.ConstraintLayout>

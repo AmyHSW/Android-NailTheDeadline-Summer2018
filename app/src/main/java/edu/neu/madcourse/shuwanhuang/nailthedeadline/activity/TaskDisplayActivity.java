@@ -9,9 +9,9 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +25,7 @@ import edu.neu.madcourse.shuwanhuang.nailthedeadline.object.Task;
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
-    private static final int AN_HOUR_IN_MILLIS = 10000; // TODO: change it
+    private static final int AN_HOUR_IN_MILLIS = 10000; // TODO: change this
 
     private Task task;
     private boolean running = false;
@@ -36,12 +36,23 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            long millis = System.currentTimeMillis() - startTime;
+            long currentTime = System.currentTimeMillis();
+            if (currentTime >= task.getDueDate().getTime()) {
+                Toast.makeText(TaskDisplayActivity.this, "Time is up!",
+                        Toast.LENGTH_SHORT).show();
+                stopWorking();
+                finish();
+                return;
+            }
+            long millis = currentTime - startTime;
             int seconds = (int) (millis / 1000);
             int minutes = seconds / 60;
-            seconds = seconds % 60;
+            seconds %= 60;
+            int hours = minutes / 60;
+            minutes %= 60;
 
-            Log.d("log", String.format("%d:%02d", minutes, seconds));
+            TextView stopwatch = findViewById(R.id.stopwatch);
+            stopwatch.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 
             timerHandler.postDelayed(this, 500);
         }
@@ -73,8 +84,8 @@ public class TaskDisplayActivity extends AppCompatActivity {
         TextView name = (TextView) findViewById(R.id.task_name);
         name.setText(task.getTaskName());
 
-        TextView dueDate = (TextView) findViewById(R.id.due_date);
         Date dueDateTime = task.getDueDate();
+        TextView dueDate = (TextView) findViewById(R.id.due_date);
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE MM'/'dd'/'y", Locale.US);
         String dueDateText = "Due " + dateFormat.format(dueDateTime);
         dueDate.setText(dueDateText);
@@ -92,15 +103,14 @@ public class TaskDisplayActivity extends AppCompatActivity {
      * @param view the View object that was clicked
      */
     public void onClickStartWorking(View view) {
-        // TODO: show the timer, start timing and detecting usage of other apps
         running = true;
         findViewById(R.id.start_task_btn).setVisibility(View.INVISIBLE);
         findViewById(R.id.stop_task_btn).setVisibility(View.VISIBLE);
         startTime = System.currentTimeMillis();
         timerHandler.postDelayed(timerRunnable, 0);
 
-        // scheduleNotificationAlarm("You have worked on " + task.getTaskName() + " for an hour!",
-        //         AN_HOUR_IN_MILLIS);  // TODO: min(1hr, time to ddl)
+        scheduleNotificationAlarm("You have worked on " + task.getTaskName() + " for an hour!",
+                AN_HOUR_IN_MILLIS);
     }
 
     /**
@@ -113,23 +123,24 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
     private void stopWorking() {
         running = false;
+        ((TextView) findViewById(R.id.stopwatch)).setText("00:00:00");
         findViewById(R.id.start_task_btn).setVisibility(View.VISIBLE);
         findViewById(R.id.stop_task_btn).setVisibility(View.INVISIBLE);
         timerHandler.removeCallbacks(timerRunnable);
         addTaskTime((int) ((System.currentTimeMillis() - startTime) / 1000)); // TODO: change this
-        // cancelNotificationAlarm();
+        cancelNotificationAlarm();
     }
 
     private void addTaskTime(int timeSpentInMinute) {
         if (timeSpentInMinute <= 0) return;
-        List<Task> tasks = DatabaseUtil.getAllTasksFromDB(this);
+        List<Task> tasks = DatabaseUtil.readOngoingTasksFromDB(this);
         for (Task t: tasks) {
             if (t.getTaskId().equals(task.getTaskId())) {
                 t.addWorkedOnInMinute(timeSpentInMinute);
                 break;
             }
         }
-        DatabaseUtil.updateTasksToDB(this, tasks);
+        DatabaseUtil.writeOngoingTasksToDB(this, tasks);
     }
 
     private void scheduleNotificationAlarm(String content, int delayInMillis) {
@@ -152,7 +163,6 @@ public class TaskDisplayActivity extends AppCompatActivity {
                 .build();
     }
 
-    // TODO: cancel alarm after timeout
     private void cancelNotificationAlarm() {
         Intent intent = new Intent(this, EndTimerReceiver.class);
         PendingIntent pendingIntent =

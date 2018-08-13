@@ -29,11 +29,11 @@ public class TaskHistoryActivity extends AppCompatActivity {
 
     private void initTaskHistoryData() {
         tasks.clear();
-        tasks = DatabaseUtil.getHistoryTasksFromDB(this);
+        tasks = DatabaseUtil.readHistoryTasksFromDB(this);
     }
 
     private void initTaskHistoryListView() {
-        if (tasks.size() > 0) {
+        if (!tasks.isEmpty()) {
             TextView noHistoryTextView = findViewById(R.id.no_history_text);
             noHistoryTextView.setVisibility(View.INVISIBLE);
         }

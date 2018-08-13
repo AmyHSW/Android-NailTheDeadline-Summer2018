@@ -12,10 +12,15 @@
     <string name="ongoing_tasks_btn">Ongoing Tasks</string>
     <string name="history_btn">History</string>
     <string name="cats_btn">My Cats</string>
+    <string name="no_tasks_text">You don\'t have any ongoing tasks.\n\n
+        Let\'s start with creating a new task!!</string>
     <!--Task Display Activity-->
     <string name="start_task_btn">Start Working</string>
     <string name="stop_task_btn">Stop</string>
     <!--History Activity-->
     <string name="no_history_text">You don\'t have any history yet.\n\n
+        Let\'s start with creating a new task!!</string>
+    <!--Cats Activity-->
+    <string name="no_cats_text">You don\'t have any cats yet.\n\n
         Let\'s start with creating a new task!!</string>
 </resources>

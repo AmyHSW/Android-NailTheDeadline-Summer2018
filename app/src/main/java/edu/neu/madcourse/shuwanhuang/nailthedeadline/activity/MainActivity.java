@@ -7,8 +7,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import java.util.ArrayList;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import edu.neu.madcourse.shuwanhuang.nailthedeadline.object.Cat;
+import edu.neu.madcourse.shuwanhuang.nailthedeadline.util.CatCollectorUtil;
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.util.DatabaseUtil;
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.R;
 import edu.neu.madcourse.shuwanhuang.nailthedeadline.object.Task;
@@ -16,11 +24,9 @@ import edu.neu.madcourse.shuwanhuang.nailthedeadline.adapter.TasksAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String PREF_NAME = "NailTheDeadline";
-    public static final String PREF_KEY = "Tasks";
     public static final String EXTRA_NAME = "Task";
 
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private final ArrayList<Task> tasks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +43,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTaskData() {
         tasks.clear();
-        tasks = DatabaseUtil.getOngoingTasksFromDB(this);
-        // TODO: for task that has passed deadline, collect cat for the task
+        List<Task> dbTasks = DatabaseUtil.readOngoingTasksFromDB(this);
+        List<Task> pastTasks = new ArrayList<>();
+        Date currentDateTime = Calendar.getInstance().getTime();
+        for (Task task : dbTasks) {
+            if (task.getDueDate().after(currentDateTime)) {
+                tasks.add(task);
+            } else {
+                pastTasks.add(task);
+            }
+        }
+        collectCatsForPastTasks(pastTasks);
+        DatabaseUtil.addPastTasksToDB(this, pastTasks);
+        DatabaseUtil.writeOngoingTasksToDB(this, tasks);
     }
 
     private void initTaskListView() {
+        TextView noTasksTextView = findViewById(R.id.no_tasks_text);
+        if (!tasks.isEmpty()) {
+            noTasksTextView.setVisibility(View.INVISIBLE);
+        } else {
+            noTasksTextView.setVisibility(View.VISIBLE);
+            return;
+        }
         ArrayAdapter<Task> adapter = new TasksAdapter(this, tasks, false);
         ListView listView = (ListView) findViewById(R.id.task_list);
         listView.setAdapter(adapter);
@@ -53,6 +77,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void collectCatsForPastTasks(List<Task> pastTasks) {
+        if (pastTasks.isEmpty()) return;
+        StringBuilder toastMsg = new StringBuilder();
+        for (Task task : pastTasks) {
+            if (toastMsg.length() > 0) {
+                toastMsg.append("\n");
+            }
+            Cat cat = CatCollectorUtil.collectCatForTask(task);
+            DatabaseUtil.addCatToDB(this, cat);
+            if (cat.getID() == 0) {
+                toastMsg.append("Oop! No cat is collected for task: " + task.getTaskName());
+                continue;
+            }
+            task.setCatID(cat.getID());
+            toastMsg.append("Congrats! You got a cat for finishing task: " + task.getTaskName());
+        }
+        Toast.makeText(this, toastMsg.toString(), Toast.LENGTH_LONG).show();
     }
 
     /**
