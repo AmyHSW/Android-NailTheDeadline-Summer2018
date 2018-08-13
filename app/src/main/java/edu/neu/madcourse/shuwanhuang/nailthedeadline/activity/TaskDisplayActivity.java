@@ -204,8 +204,19 @@ public class TaskDisplayActivity extends AppCompatActivity {
             finish();
         } else {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            // Get the criteria you would like to use
+            Criteria criteria = new Criteria();
+            criteria.setPowerRequirement(Criteria.POWER_LOW);
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);
+            criteria.setAltitudeRequired(false);
+            criteria.setBearingRequired(false);
+            criteria.setCostAllowed(false);
+            criteria.setSpeedRequired(false);
+            // Get the best provider from the criteria specified, and false to say it can turn the provider on if it isn't already
+            assert lm != null;
+            String bestProvider = lm.getBestProvider(criteria, true);
             // Request location updates
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, ll);
+            lm.requestLocationUpdates(bestProvider, 5000, 5, ll);
         }
     }
 

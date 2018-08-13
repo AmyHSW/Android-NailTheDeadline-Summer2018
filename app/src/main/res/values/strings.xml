@@ -55,6 +55,6 @@
         to spend a lot of time (~ 10 hr) to get rare cats.
         \n\
         <b>Attention</b>: For testing purpose, I have intentionally set <b>1 second to 10 minutes</b>,
-        <b>6 seconds to 1 hour</b>, so that you will be able to get notification when you spend 10s on the task.
+        <b>6 seconds to 1 hour</b>, so that you will be able to get notification when you spend 6s on the task.
     </string>
 </resources>
